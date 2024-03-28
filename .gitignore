@@ -11,6 +11,7 @@
 /.idea/migration.xml
 /.idea/misc.xml
 /.idea/gradle.xml
+/.idea/vcs.xml
 /.idea/navEditor.xml
 .DS_Store
 /build
