@@ -5,13 +5,11 @@ import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import android.widget.TextView
+import com.innovative.porosh.bmicalculator.databinding.FragmentResultBinding
 
 class ResultFragment : Fragment() {
 
-    private lateinit var bmiScoreTxt: TextView
-    private lateinit var categoryTxt: TextView
-
+    private lateinit var binding: FragmentResultBinding
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
     }
@@ -19,14 +17,12 @@ class ResultFragment : Fragment() {
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
-    ): View? {
-        val view = inflater.inflate(R.layout.fragment_result, container, false)
-        bmiScoreTxt = view.findViewById(R.id.bmiScoreTxt)
-        categoryTxt = view.findViewById(R.id.categoryTxt)
+    ): View {
+        binding = FragmentResultBinding.inflate(inflater,container,false)
 
         val score = arguments?.getDouble("score")
         val formattedScore = String.format("%.2f",score)
-        bmiScoreTxt.text = formattedScore
+        binding.bmiScoreTxt.text = formattedScore
 
         val category = when(formattedScore.toDouble()){
             in 0.0 .. 18.4 -> UNDER_WEIGHT
@@ -37,9 +33,9 @@ class ResultFragment : Fragment() {
             else -> OBESITY3
         }
 
-        categoryTxt.text = category
+        binding.categoryTxt.text = category
 
-        return view
+        return binding.root
     }
 
     companion object {
