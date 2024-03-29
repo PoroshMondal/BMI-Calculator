@@ -1,22 +1,24 @@
 package com.innovative.porosh.bmicalculator.viewModels
 
 import android.util.Log
+import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import com.innovative.porosh.bmicalculator.ResultFragment
 
 /*
 * This is a separator class for View and Model
 * Here we will write all Business logic
+* Used Live Data functionality to observe the data changes in View or UI
 * */
 class BmiViewModel: ViewModel() {
 
-    var bmi = 0.0
-    var category = ""
+    var bmi: MutableLiveData<Double> = MutableLiveData()
+    var category: MutableLiveData<String> = MutableLiveData()
 
     public fun calculateBmi(weight: Double, height: Double){
-        bmi = weight/(height * height)
+        bmi.value = weight/(height * height)
 
-        category = when(bmi.toDouble()){
+        category.value = when(String.format("%.1f",bmi.value).toDouble()){
             in 0.0 .. 18.4 -> UNDER_WEIGHT
             in 18.5 .. 24.9 -> NORMAL
             in 25.0 .. 29.9 -> OVER_WEIGHT
@@ -25,7 +27,7 @@ class BmiViewModel: ViewModel() {
             else -> OBESITY3
         }
 
-        Log.e("BMIViewModel", "${String.format("%.2f",bmi)}, $category")
+        Log.e("BMIViewModel", "${String.format("%.1f",bmi.value)}, $category")
 
     }
 

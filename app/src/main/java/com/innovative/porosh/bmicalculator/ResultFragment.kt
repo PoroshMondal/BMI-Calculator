@@ -22,12 +22,15 @@ class ResultFragment : Fragment() {
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View {
-        viewModel = ViewModelProvider(requireActivity()).get(BmiViewModel::class.java)
-
         binding = FragmentResultBinding.inflate(inflater,container,false)
 
-        binding.bmiScoreTxt.text = String.format("%.2f",viewModel.bmi)
-        binding.categoryTxt.text = viewModel.category
+        viewModel = ViewModelProvider(requireActivity()).get(BmiViewModel::class.java)
+        viewModel.bmi.observe(viewLifecycleOwner) { bmi ->
+            binding.bmiScoreTxt.text = String.format("%.1f", bmi)
+        }
+        viewModel.category.observe(viewLifecycleOwner){category ->
+            binding.categoryTxt.text = category
+        }
 
         return binding.root
     }
